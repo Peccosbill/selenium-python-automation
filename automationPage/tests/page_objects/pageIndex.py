@@ -6,9 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 class PageIndex:
 
     def __init__(self, driver):
-        # self.query_top = 'search_query_top'
         self.query_top = (By.ID, 'search_query_top')
-        # self.query_button = 'submit_search'
         self.query_button = (By.NAME, 'submit_search')
         self.dresses_link = (By.XPATH, '//*[@title="Dresses"]')
         self.driver = driver
