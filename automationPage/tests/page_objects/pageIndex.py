@@ -10,6 +10,7 @@ class PageIndex:
         self.query_top = (By.ID, 'search_query_top')
         # self.query_button = 'submit_search'
         self.query_button = (By.NAME, 'submit_search')
+        self.dresses_link = (By.XPATH, '//*[@title="Dresses"]')
         self.driver = driver
 
     def search(self, item):
@@ -22,3 +23,6 @@ class PageIndex:
             search_button.click()
         except:
             print('No se encuentra el elemento')
+    
+    def click_dresses(self):
+        self.driver.find_elements(*self.dresses_link)[1].click()

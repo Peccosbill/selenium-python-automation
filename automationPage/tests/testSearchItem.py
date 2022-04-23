@@ -1,23 +1,32 @@
-from requests import options
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import unittest
 import time
-from pageIndex import PageIndex
-from pageItems import PageItems
-from pageItem import PageItem
+from page_objects.pageIndex import PageIndex
+from page_objects.pageItems import PageItems
+from page_objects.pageItem import PageItem
 
 
 class SearchCases(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        print('Creando base de datos')
+        print('BD creada')
+
+    @classmethod
+    def tearDownClass(cls):
+        print('Eliminando BD...')
+        print('BD eliminada...')
 
     def setUp(self):
         option = Options()
         # option.add_argument('start-maximized')
         # option.add_argument('incognito')
-        option.add_argument('--headless')
+        option.add_argument('headless')
         # option.add_argument('--disable-gpu')
         self.driver = webdriver.Chrome(
-            'drivers\chromedriver.exe', chrome_options=option)
+            'drivers/chromedriver.exe', options=option)
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.implicitly_wait(5)
         # self.driver.maximize_window()
@@ -26,23 +35,26 @@ class SearchCases(unittest.TestCase):
         self.itemsPage = PageItems(self.driver)
         self.itemPage = PageItem(self.driver)
 
+    @unittest.skip
     def test_search_no_elements(self):
         try:
-            self.indexPage.search('pepe')
+            self.indexPage.search('hola')
             self.assertEqual(self.itemsPage.return_no_element_text(),
-                            'No results were found for your search "hola"')
+                             'No results were found for your search "hola"')
         except:
             self.driver.save_screenshot('error.jpg')
 
-
+    @unittest.skip
     def test_search_find_dresses(self):
         self.indexPage.search('dress')
         self.assertTrue('DRESS' in self.itemsPage.return_section_titles())
 
+    @unittest.skip
     def test_search_find_tshirts(self):
         self.indexPage.search('t-shirt')
         self.assertTrue('T-SHIRT' in self.itemsPage.return_section_titles())
 
+    @unittest.skip
     def test_tarea(self):
         self.indexPage.search('t-shirt')
         self.itemsPage.select_color()
@@ -51,12 +63,18 @@ class SearchCases(unittest.TestCase):
         number = self.itemPage.get_number_of_element()
         self.assertTrue(number, '28')
 
+    @unittest.skip
     def test_selections(self):
         self.indexPage.search('t-shirt')
         self.itemsPage.select_by_text('Product Name: Z to A')
         self.itemsPage.select_by_value('reference:asc')
         self.itemsPage.select_by_index(4)
-        time.sleep
+
+    def test_desses_options(self):
+        self.indexPage.click_dresses()
+        self.itemsPage.click_checkbox(2)
+        self.itemsPage.click_checkbox(4)
+        self.itemsPage.click_colors(3)
 
     def tearDown(self):
         self.driver.close()

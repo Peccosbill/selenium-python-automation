@@ -17,7 +17,7 @@ class Pruebas_de_standards(unittest.TestCase):
         a = 5 + 1
         b = 4 + 2
         self.assertTrue(a == b, "a y b deberían ser iguales")
-    
+
     def test_algo_es_falso(self):
         self.assertFalse(2+1 == 3+5)
 
