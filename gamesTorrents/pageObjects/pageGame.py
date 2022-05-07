@@ -20,7 +20,7 @@ class PageGame:
         card_game.click()
 
     def verify_title_game(self):
-        game_title = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(self.game_title))
+        game_title = WebDriverWait(self.driver, 4).until(EC.presence_of_element_located(self.game_title))
         return game_title.text
 
     def select_game(self):
